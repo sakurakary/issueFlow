@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class TicketController
+final class TicketController extends AbstractController
 {
     /* En este ejemplo, los tickets se definen de forma estática. 
         En un caso real, se obtendrían de una base de datos. */
@@ -30,6 +31,8 @@ final class TicketController
         // self::TICKETS hace referencia a la constante de clase TICKETS, que contiene el array de incidencias.
         $total = count(self::TICKETS);
 
+
+
         foreach (self::TICKETS as $ticket) {
             $items .= "<li>{$ticket['id']}: {$ticket['title']} ({$ticket['priority']})</li>";
         }
@@ -45,6 +48,7 @@ final class TicketController
         $items = '<li>INC-1001: No puedo iniciar sesión (urgent)</li><li>INC-1002: Error en la factura (high)</li><li>INC-1003: Actualizar datos de contacto (normal)</li>'    
         */
 
+       
 
         $html = <<<HTML
             <!DOCTYPE html>
@@ -75,13 +79,19 @@ final class TicketController
 
         // Se inicializa la variable $ticket como null, que contendrá el ticket encontrado.    
         $ticket = null;
-
+        
         // Se recorre el array de tickets para buscar el ticket con el ID proporcionado.
         foreach(self::TICKETS as $candidate) {
             if ($candidate['id'] === $id) {
                 $ticket = $candidate;
                 break;
             }
+        }
+
+        //en este punto del código, si $ticket sigue siendo null, significa que no se encontró ningún ticket con el ID proporcionado.
+        //Si es null, voy a lanzar un error / excepción 404: Not found
+        if ($ticket === null) {
+            throw $this->createNotFoundException('Ticket no encontrado');
         }
 
         $html = <<<HTML
