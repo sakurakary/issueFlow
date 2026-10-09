@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{#
+    sobreescribimos el titulo de la pagina, usamos la variable title, el cual vendrá desde el controlador
+#}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %} 
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">IFCT092PO - {{ title }}</p>
+            {# projectName debe venir desde el controlador #}   
+            <h1>{{ title }}</h1>
+        </div>
+
+        {#
+            El array tickets será suministrado por el controlador y contendrá todas las incidencias que se han creado en la aplicación
+            El filtro length nos permite contar el número de elementos que contiene un array, contiene el número de elementos del array tickets
+        #}
+        <p class="counter">Total incidencias: {{ tickets|length }}</p>
+    </div>
+    <div class="tickets-list">
+        {# Recorremos el array tickets y generamos un enlace para cada incidencia #}
+        {% for ticket in tickets %} {#podemos cambiar el nombre de la variable (ticket) por otra pero tenemos que referenciarlo al incluir la plantilla _ticket_card.html.twig #}
+            {# incluimos la plantilla _ticket_card.html.twig y le pasamos la variable ticket para que pueda mostrar los datos de cada incidencia #}     
+            {% include 'tickets/_ticket_card.html.twig' with { 'ticket': ticket } only %}
+        {% else %}
+            <p>No hay incidencias registradas.</p>
+        {% endfor %}
+
+        {#
+            Creamos un enlace para navegar a la página de un ticket en
+            particular, ruta /tickets/{id}
+            app_ticket_show necesita un parámetro {id} uq e se lo enviamos
+            en el segundo argumento de path()
+        #}
+    <div>
+{% endblock %}

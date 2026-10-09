@@ -1,0 +1,8 @@
+<article class="ticket-card">
+    <div class="ticket-id">
+        <p class="ticket-id">ID: {{ticket.id}}</p>
+        <h2>{{ ticket.title }}</h2>
+        <p class="ticket-priority">Prioridad: {{ ticket.priority }}</p>
+    </div>
+    <a class="ticket" href="{{ path('app_ticket_show', {'id': ticket.id}) }}">Ver incidencia</a>
+</article>

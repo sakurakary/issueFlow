@@ -7,6 +7,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 final class TicketController extends AbstractController
 {
@@ -25,14 +26,23 @@ final class TicketController extends AbstractController
     #[Route('/tickets', name: 'app_ticket_index', methods: ['GET'])]
     // El método que devuelve la lista de tickets por convención REST es index().
     public function index(): Response {
-        // Se inicializan las variables $items, $title y $total que contendrán los <li> de cada incidencia, el título y el total respectivamente.
+        
+        return $this->render('tickets/index.html.twig', [
+            'title' => 'Incidencias',
+            'tickets' => self::TICKETS,
+        ]);
+
+        //Esto sería para no usar plantilla twig, y generar el html directamente en el controlador, pero no es recomendable, por eso lo comentamos
+        // Se inicializa la variable $html que contendrá el HTML de la página.
+        //$html = '';
+    // Se inicializan las variables $items, $title y $total que contendrán los <li> de cada incidencia, el título y el total respectivamente.
         $items = '';
         $title = 'Incidencias';
         // self::TICKETS hace referencia a la constante de clase TICKETS, que contiene el array de incidencias.
         $total = count(self::TICKETS);
 
 
-
+        /*ya no necesitamos el foreach aqui por que lo hacemos en la plantilla      
         foreach (self::TICKETS as $ticket) {
             $items .= "<li>{$ticket['id']}: {$ticket['title']} ({$ticket['priority']})</li>";
         }
@@ -69,17 +79,20 @@ final class TicketController extends AbstractController
             </html>
         HTML;
 
-        return new Response($html, Response::HTTP_OK);
+        return new Response($html, Response::HTTP_OK); #}
+
+
+
     }
 
     // Ruta dinámica para mostrar un ticket específico por su ID.
     #[Route('/tickets/{id}', name:"app_ticket_show", methods: ['GET'])]
     // El método que devuelve un ticket en particular por convención REST es show().
-    public function show(string $id) {
+    public function show(string $id, Request $request) {
 
         // Se inicializa la variable $ticket como null, que contendrá el ticket encontrado.    
         $ticket = null;
-        
+
         // Se recorre el array de tickets para buscar el ticket con el ID proporcionado.
         foreach(self::TICKETS as $candidate) {
             if ($candidate['id'] === $id) {
@@ -94,22 +107,47 @@ final class TicketController extends AbstractController
             throw $this->createNotFoundException('Ticket no encontrado');
         }
 
-        $html = <<<HTML
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Ticket {$id}</title>
-            </head>
-            <body>
-                <h1>Ticket {$id}</h1>
-                <p>Title: {$ticket['title']}</p>
-                <p>Priority: {$ticket['priority']}</p>
-            </body>
-            </html>
-        HTML;
+        /** Voy a checar si tengo parámetros en la petición / request (query)
+         * Esto precupera el valor del view si existe en la URL: https://localhost:8000/tickets/INC-1001?view=compact
+         * Si no existe, se asigna el valor por default 'full'
+         * Esto es útil para mostrar diferentes vistas del ticket según el parámetro view.
+         */
+        $view = $request->query->get('view', 'full');
 
+        if ($view === 'compact') {
+           $html = <<<HTML
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Ticket {$id}</title>
+                </head>
+                <body>
+                    </p>>Ticket {$id} / {$ticket['title']} / {$ticket['priority']}</p>
+                </body>
+                </html>
+            HTML; 
+        
+        }else {
+            // Si el parámetro view no es 'compact', se muestra la vista completa del ticket.
+            $html = <<<HTML
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Ticket {$id}</title>
+                </head>
+                <body>
+                    <h1>Ticket {$id}</h1>
+                    <p>Title: {$ticket['title']}</p>
+                    <p>Priority: {$ticket['priority']}</p>
+                </body>
+                </html>
+            HTML;
+            
+        }
         return new Response($html, Response::HTTP_OK);
     }
 }
