@@ -88,66 +88,30 @@ final class TicketController extends AbstractController
     // Ruta dinámica para mostrar un ticket específico por su ID.
     #[Route('/tickets/{id}', name:"app_ticket_show", methods: ['GET'])]
     // El método que devuelve un ticket en particular por convención REST es show().
-    public function show(string $id, Request $request) {
+    public function show(string $id/*, Request $request*/) {
 
-        // Se inicializa la variable $ticket como null, que contendrá el ticket encontrado.    
-        $ticket = null;
+        /*tambien se puede también recorrer el array, en vez de con foreach, con la función 
+        array_find($array, $callback) 
+        que devuelve el primer elemento del array que cumpla con la condición del callbacks 
+        (desde PHP 8.4)*/
 
-        // Se recorre el array de tickets para buscar el ticket con el ID proporcionado.
-        foreach(self::TICKETS as $candidate) {
-            if ($candidate['id'] === $id) {
-                $ticket = $candidate;
-                break;
-            }
-        }
-
-        //en este punto del código, si $ticket sigue siendo null, significa que no se encontró ningún ticket con el ID proporcionado.
-        //Si es null, voy a lanzar un error / excepción 404: Not found
-        if ($ticket === null) {
-            throw $this->createNotFoundException('Ticket no encontrado');
-        }
-
-        /** Voy a checar si tengo parámetros en la petición / request (query)
-         * Esto precupera el valor del view si existe en la URL: https://localhost:8000/tickets/INC-1001?view=compact
-         * Si no existe, se asigna el valor por default 'full'
-         * Esto es útil para mostrar diferentes vistas del ticket según el parámetro view.
-         */
-        $view = $request->query->get('view', 'full');
-
-        if ($view === 'compact') {
-           $html = <<<HTML
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Ticket {$id}</title>
-                </head>
-                <body>
-                    </p>>Ticket {$id} / {$ticket['title']} / {$ticket['priority']}</p>
-                </body>
-                </html>
-            HTML; 
+        $ticket = array_find
+        (
+            self::TICKETS, 
+            fn(array $ticket):bool => $ticket['id'] === $id
+        );
         
-        }else {
-            // Si el parámetro view no es 'compact', se muestra la vista completa del ticket.
-            $html = <<<HTML
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Ticket {$id}</title>
-                </head>
-                <body>
-                    <h1>Ticket {$id}</h1>
-                    <p>Title: {$ticket['title']}</p>
-                    <p>Priority: {$ticket['priority']}</p>
-                </body>
-                </html>
-            HTML;
-            
+        /*
+            si entra en el if lanza (return) que hay un error y se termina la función
+            si no entra la función sigue y seguiria haciendo lo que hubiese
+        */
+        if ($ticket === null) {
+            throw $this->createNotFoundException("Ticket con ID {$id} no encontrado.");
         }
-        return new Response($html, Response::HTTP_OK);
+
+        /**/
+        return $this->render('tickets/show.html.twig', [
+            'ticket' => $ticket
+        ]);
     }
 }

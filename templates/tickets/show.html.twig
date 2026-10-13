@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ticket.id }} - {{ ticket.title }}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">IFCT092PO - {{ ticket.id }} - {{ ticket.title }}</p>
+            <h1>{{ ticket.title }}</h1>
+        </div>
+    </div>
+
+    <div class="ticket-details">
+        <p><strong>ID:</strong> {{ ticket.id }}</p>
+        <p><sptrong>Título:</sptrong> {{ ticket.title }}</p>
+        <p><strong>Prioridad:</strong> {{ ticket.priority }}</p>
+    </div>
+
+    <a href="{{ path('app_ticket_index') }}">Volver a la lista de incidencias</a>
+{% endblock %}
