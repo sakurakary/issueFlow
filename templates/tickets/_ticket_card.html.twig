@@ -4,5 +4,5 @@
         <h2>{{ ticket.title }}</h2>
         <p class="ticket-priority">Prioridad: {{ ticket.priority }}</p>
     </div>
-    <a class="ticket" href="{{ path('app_ticket_show', {'id': ticket.id}) }}">Ver incidencia</a>
+    <a class="button" href="{{ path('app_ticket_show', {'id': ticket.id}) }}">Ver incidencia</a>
 </article>
