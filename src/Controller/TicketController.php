@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use ticket\models\Ticket;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,11 +19,7 @@ final class TicketController extends AbstractController
     /* TICKETS es un array donde cada elemento es un ticket en particular
     Cada ticket es un array asociativo, que contiene los datos o propiedades de este. */
     // Esto es una constante de clase, que se puede acceder desde cualquier método de la clase TicketController.
-    private const TICKETS = [
-        ['id' => 'INC-1001', 'title' => 'No puedo iniciar sesión', 'priority' => 'urgent'],
-        ['id' => 'INC-1002', 'title' => 'Error en la factura', 'priority' => 'high'],
-        ['id' => 'INC-1003', 'title' => 'Actualizar datos de contacto', 'priority' => 'normal'],
-    ];
+
 
     #[Route('/tickets', name: 'app_ticket_index', methods: ['GET'])]
     // El método que devuelve la lista de tickets por convención REST es index().
@@ -29,7 +27,7 @@ final class TicketController extends AbstractController
         
         return $this->render('tickets/index.html.twig', [
             'title' => 'Incidencias',
-            'tickets' => self::TICKETS,
+            'tickets' => Ticket::getAllticket(),
         ]);
 
         //Esto sería para no usar plantilla twig, y generar el html directamente en el controlador, pero no es recomendable, por eso lo comentamos

@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ ticket.id }} - {{ ticket.title }}{% endblock %}
@@ -13,8 +14,26 @@
     <div class="ticket-details">
         <p><strong>ID:</strong> {{ ticket.id }}</p>
         <p><sptrong>Título:</sptrong> {{ ticket.title }}</p>
-        <p><strong>Prioridad:</strong> {{ ticket.priority }}</p>
+        <p><strong>Prioridad:</strong> {{ ticket.priority.value }}</p>
     </div>
+
+    {#
+        Quiero mostrar un mensaje solo si priority es 'urgent'. ticket.urgen resuelve el metodo isUrgetn()
+    #}
+    {% if ticket.urgent %}
+        <div class="alert alert-danger">
+            <strong>¡Atención!</strong> Esta incidencia es urgente. Requiere atención inmediata
+        </div>
+    {% endif %}
+
+    {#
+        Quiero mostrar un mensaje solo si status es 'open'. ticket.open resuelve el metodo isOpen()
+    #}
+    {% if not ticket.open %}
+        <div class="alert alert-warning">
+            <p><strong>Esta incidencia ya está siendo gestionada o está cerrada</strong></p>
+        </div>
+    {% endif %}
 
     <a class="button" href="{{ path('app_ticket_index') }}">Volver a la lista de incidencias</a>
 {% endblock %}

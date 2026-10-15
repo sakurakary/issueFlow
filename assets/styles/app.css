@@ -41,6 +41,9 @@ main { padding-block: 2.5rem; }
 .counter { color: #64748b; }
 .button { display: inline-block; background: #0f766e; color: white; padding: .7rem 1rem; border-radius: 8px; text-decoration: none; }
 footer { background: #17324d; color: white; padding-block: 1rem; text-align: center; font-size: .85rem; }
+.alert { padding: 1rem; border-radius: 8px; margin-block: 1rem; }
+.alert-warning { background: #fef3c7; color: #78350f; padding: 1rem; border-radius: 8px; margin-block: 1rem; }
+
 /* Ajuste sencillo para pantallas pequeñas. */
 @media (max-width: 640px) {
     .header-inner, .page-header, .ticket-card { align-items: flex-start; flex-direction: column; }

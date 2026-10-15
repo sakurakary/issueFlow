@@ -12,22 +12,25 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-final class ticket {
-    private string $id;
-    private string $title;
-    private string $priority;
-    private string $descripcion;
-    private string $usuario;
-    private \DateTime $fecha;
+use app\Model\TicketPriority;
 
-    public function __construct(string $id, string $title, string $priority, string $descripcion, string $usuario, \DateTime $fecha) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->priority = $priority;
-        $this->descripcion = $descripcion;
-        $this->usuario = $usuario;
-        $this->fecha = $fecha;
-    }
+/*No es necesario el use por estar en el mismo namespace
+        use app\Model\TicketPriority;
+*/
+
+
+final class Ticket {
+    
+
+    public function __construct(
+        private string $id,
+        private string $title,
+        private TicketPriority $priority,
+        private string $descripcion,
+        private string $usuario,
+        private \DateTime $fecha,
+        private string $estado,
+    ) {}
 
     public function getId(): string {
         return $this->id;
@@ -37,7 +40,7 @@ final class ticket {
         return $this->title;
     }
 
-    public function getPriority(): string {
+    public function getPriority(): TicketPriority {
         return $this->priority;
     }
 
@@ -53,6 +56,10 @@ final class ticket {
         return $this->fecha;
     }
 
+    public function getStatus():string{
+        return $this->estado;
+    }
+
     public function setId(string $id): void {
         $this->id = $id;
     }
@@ -61,9 +68,9 @@ final class ticket {
         $this->title = $title;
     }   
 
-    public function setPriority(string $priority): void {
-        $this->priority = $priority;
-    }
+    /*public function setPriority(string $priority): void {
+        $this->priority = TicketPriority;
+    }*/
 
     public function setDescription(string $descripcion): void{
         $this->descripcion = $descripcion;
@@ -77,7 +84,59 @@ final class ticket {
         $this->fecha = $fecha;
     }  
 
+    public function setStatus(string $estado): void{
+        $this->$estado = $estado; 
+    }
+    //llama al metodo del enum de TicketPriority donde se evalua la prioridad
     public function isUrgent (): bool {
-        return $this->priority === 'urgent';
+        return $this->priority === isUrgent();
+    }
+
+    public function isOpen (): bool {
+        return $this->status === 'open';
+    }
+
+    public static function getAllTickets(): array{
+        return [
+            new Ticket(
+                id: 'INC-1001',
+                title: 'Error en la factura',
+                priority: TicketyPriority::Urgent,
+                descripcion:'Al imprimir salta un error en la factura',
+                usuario:'Galimatias33',
+                fecha: new \DateTime('05/02/2026'),
+                estado: 'open',
+            ),
+            new Ticket(
+                id: 'INC-1002',
+                title: 'PC no enciednde',
+                priority: TicketyPriority::High,
+                descripcion:'Al imprimir salta un error en la factura',
+                usuario:'Galimatias02',
+                fecha: new \DateTime('05/02/2026'),
+                estado: 'open',
+            ),
+            new Ticket(
+                id: 'INC-1003',
+                title: 'Error en la factura',
+                priority: TicketyPriority::Normal,
+                descripcion:'Al imprimir salta un error en la factura',
+                usuario:'Galimatias18',
+                fecha: new \DateTime('05/02/2026'),
+                estado: 'open',
+            )
+        ];
     }
 }
+
+
+
+//Las posibles prioridades que va a aceptar el código
+/* enum TicketPriority: string
+{
+    case Urgent = 'urgent';
+    case High = 'high';
+    case Normal = 'normal';
+    case Low = 'low';
+}
+*/
