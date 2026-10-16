@@ -14,8 +14,8 @@
     <div class="ticket-details">
         <p><strong>ID:</strong> {{ ticket.id }}</p>
         <p><strong>Título:</strong> {{ ticket.title }}</p>
-        <p><strong>Prioridad:</strong> {{ ticket.priority.value }}</p>
-        <p><strong>Estado:</strong> {{ ticket.status.value }}</p>
+        <p><strong>Prioridad:</strong> {{ ticket.priority.label }}</p>
+        <p><strong>Estado:</strong> {{ ticket.status.label }}</p>
         <p><strong>Usuario:</strong> {{ ticket.user }}</p>
         <p><strong>Descripcion:</strong> {{ ticket.description }}</p>
         <p style="color: {{ responseTargetHours == 4 ? 'red' : 'black' }}"><strong>Tiempo de respuesta:</strong> {{ responseTargetHours }}

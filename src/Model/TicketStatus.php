@@ -12,6 +12,14 @@ enum TicketStatus: string{
     case Open = 'open';
     case Close = 'close';
     case Progress = 'in progress';
+
+    public function getLabel(): string{
+        return match ($this) {
+           self::Open => 'Abierto',
+           self::Close => 'Cerrado',
+           self::Progress => 'En Progreso',
+        };
+    }
     
     //evalua la prioridad del ticket
     public function isOpen (): bool {

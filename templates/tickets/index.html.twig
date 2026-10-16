@@ -19,7 +19,7 @@
         #}
         <p class="counter">Total incidencias: {{ tickets|length }}</p>
     </div>
-    <div class="tickets-list">
+    <div class="ticket-list">
         {# Recorremos el array tickets y generamos un enlace para cada incidencia #}
         {% for ticket in tickets %} {#podemos cambiar el nombre de la variable (ticket) por otra pero tenemos que referenciarlo al incluir la plantilla _ticket_card.html.twig #}
             {# incluimos la plantilla _ticket_card.html.twig y le pasamos la variable ticket para que pueda mostrar los datos de cada incidencia #}     
