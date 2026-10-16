@@ -19,7 +19,3 @@ enum TicketPriority: string{
         return $this === self::Urgent;
     }
 }
-
-    
-
-?>

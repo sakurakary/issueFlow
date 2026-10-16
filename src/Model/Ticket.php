@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use app\Model\TicketPriority;
-
 /*No es necesario el use por estar en el mismo namespace
         use app\Model\TicketPriority;
 */
@@ -26,10 +24,10 @@ final class Ticket {
         private string $id,
         private string $title,
         private TicketPriority $priority,
-        private string $descripcion,
-        private string $usuario,
-        private \DateTime $fecha,
-        private string $estado,
+        private string $description,
+        private string $user,
+        private \DateTime $date,
+        private TicketStatus $status,
     ) {}
 
     public function getId(): string {
@@ -44,20 +42,20 @@ final class Ticket {
         return $this->priority;
     }
 
-    public function getDescripción(): string{
-        return $this->descripcion;
+    public function getDescription(): string{
+        return $this->description;
     }
 
-    public function getUsuario(): string{
-        return $this->usuario;
+    public function getUser(): string{
+        return $this->user;
     }
     
-    public function getFecha(): \DateTime{
-        return $this->fecha;
+    public function getDate(): \DateTime{
+        return $this->date;
     }
 
-    public function getStatus():string{
-        return $this->estado;
+    public function getStatus():TicketStatus{
+        return $this->status;
     }
 
     public function setId(string $id): void {
@@ -72,71 +70,32 @@ final class Ticket {
         $this->priority = TicketPriority;
     }*/
 
-    public function setDescription(string $descripcion): void{
-        $this->descripcion = $descripcion;
+    public function setDescription(string $description): void{
+        $this->description = $description;
     }
 
-    public function setUsuario(string $usuario): void{
-        $this->usuario = $usuario;
+    public function setUser(string $user): void{
+        $this->user = $user;
     }
 
-    public function setFecha(\DateTime $fecha): void{
-        $this->fecha = $fecha;
+    public function setDate(\DateTime $date): void{
+        $this->date = $date;
     }  
 
-    public function setStatus(string $estado): void{
+    /*public function setStatus(string $estado): void{
         $this->$estado = $estado; 
-    }
+    }*/
+
     //llama al metodo del enum de TicketPriority donde se evalua la prioridad
     public function isUrgent (): bool {
-        return $this->priority === isUrgent();
+        return $this->priority->isUrgent();
+    }
+
+    public function isClose (): bool {
+        return $this->status->isClosed();
     }
 
     public function isOpen (): bool {
-        return $this->status === 'open';
-    }
-
-    public static function getAllTickets(): array{
-        return [
-            new Ticket(
-                id: 'INC-1001',
-                title: 'Error en la factura',
-                priority: TicketyPriority::Urgent,
-                descripcion:'Al imprimir salta un error en la factura',
-                usuario:'Galimatias33',
-                fecha: new \DateTime('05/02/2026'),
-                estado: 'open',
-            ),
-            new Ticket(
-                id: 'INC-1002',
-                title: 'PC no enciednde',
-                priority: TicketyPriority::High,
-                descripcion:'Al imprimir salta un error en la factura',
-                usuario:'Galimatias02',
-                fecha: new \DateTime('05/02/2026'),
-                estado: 'open',
-            ),
-            new Ticket(
-                id: 'INC-1003',
-                title: 'Error en la factura',
-                priority: TicketyPriority::Normal,
-                descripcion:'Al imprimir salta un error en la factura',
-                usuario:'Galimatias18',
-                fecha: new \DateTime('05/02/2026'),
-                estado: 'open',
-            )
-        ];
+        return $this->status->isOpen();
     }
 }
-
-
-
-//Las posibles prioridades que va a aceptar el código
-/* enum TicketPriority: string
-{
-    case Urgent = 'urgent';
-    case High = 'high';
-    case Normal = 'normal';
-    case Low = 'low';
-}
-*/
