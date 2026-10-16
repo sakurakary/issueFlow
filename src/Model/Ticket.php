@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use InvalidArgumentException;
+
 /*No es necesario el use por estar en el mismo namespace
         use app\Model\TicketPriority;
 */
@@ -21,14 +23,28 @@ final class Ticket {
     
 
     public function __construct(
-        private string $id,
+        private readonly string $id,
         private string $title,
         private TicketPriority $priority,
         private string $description,
         private string $user,
         private \DateTime $date,
         private TicketStatus $status,
-    ) {}
+    ) {
+
+        /* Verificamos la forma del id comparando con una regex (expresiones regulare) */
+        if (preg_match('/^INC-\d{4}$/', $this->id) !== 1) {
+            throw new InvalidArgumentException('El formato del id del ticket no es válido');
+        }
+        /* Hacemos un trim (eliminar espacios antes y después) del title */
+        $normalizedTitle = trim($title);
+        // Verificamos que la cadena de texto no esté vacía
+        if ($normalizedTitle === '') {
+            throw new InvalidArgumentException('El título no puede estar vacío');
+        }
+        $this->title = $normalizedTitle;
+
+    }
 
     public function getId(): string {
         return $this->id;
