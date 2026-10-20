@@ -1,0 +1,37 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Error 404 | Página no encontrada
+{% endblock %}
+
+{% block content %}
+
+<div class="error-container">
+
+    <h1 class="error-code">
+        404
+    </h1>
+
+    <h2 class="error-title">
+        ¡Página no encontrada!
+    </h2>
+
+    <p class="error-message">
+        Lo sentimos, la página que estás buscando
+        no existe o ha cambiado de dirección.
+    </p>
+
+    <p class="error-message">
+        Comprueba que la dirección web esté
+        escrita correctamente o vuelve
+        a la página principal.
+    </p>
+
+    <a href="{{ path('app_home') }}"
+       class="error-button">
+        Volver al inicio
+    </a>
+
+</div>
+{% endblock %}

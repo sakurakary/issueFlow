@@ -1,0 +1,22 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Error 403 | Acceso denegado
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <h1 class="error-code">403</h1>
+
+    <h2 class="error-title">
+        Acceso denegado
+    </h2>
+
+    <p class="error-message">Lo sentimos, no tienes permisos para acceder a esta página.
+        <br>Si crees que se trata de un error, contacta con el administrador.
+    </p>
+
+    <a href="{{ path('app_home') }}" class="error-button">Volver al inicio</a>
+</div>
+{% endblock %}

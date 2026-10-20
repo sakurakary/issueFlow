@@ -1,0 +1,30 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Error {{ status_code }} | {{ status_text }}
+{% endblock %}
+
+{% block content %}
+
+<div class="error-container">
+
+    <h1 class="error-code">{{ status_code }}</h1>
+
+    <h2 class="error-title">¡Ups! Algo ha salido mal</h2>
+
+    <p class="error-message">Se ha producido un error al procesar tu solicitud.
+    </p>
+
+    <p class="error-message">
+        Código de error: {{ status_code }}
+    </p>
+
+    <p class="error-message">
+        Por favor, inténtalo de nuevo más tarde. Si el problema persiste, contacta con el administrador.
+    </p>
+
+    <a href="{{ path('app_home') }}" class="error-button">Volver al inicio</a>
+
+</div>
+{% endblock %}

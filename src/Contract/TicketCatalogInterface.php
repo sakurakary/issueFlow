@@ -6,7 +6,7 @@ namespace App\Contract;
 
 use App\Model\Ticket;
 
-interface InMemoryTicketCatalogInterface
+interface TicketCatalogInterface
 {
 
     public function all() : array;

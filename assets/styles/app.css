@@ -43,7 +43,49 @@ main { padding-block: 2.5rem; }
 footer { background: #17324d; color: white; padding-block: 1rem; text-align: center; font-size: .85rem; }
 .alert { padding: 1rem; border-radius: 8px; margin-block: 1rem; }
 .alert-warning { background: #fef3c7; color: #78350f; padding: 1rem; border-radius: 8px; margin-block: 1rem; }
+  .error-container {
+        min-height: 75vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+        font-family: Arial, sans-serif;
+    }
 
+    .error-code {
+        font-size: 8rem;
+        font-weight: bold;
+        color: #dc3545;
+        margin: 0;
+    }
+
+    .error-title {
+        font-size: 2rem;
+        margin: 1rem 0;
+    }
+
+    .error-message {
+        color: #666;
+        max-width: 500px;
+        line-height: 1.6;
+    }
+
+    .error-button {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 12px 28px;
+        background: #0d6efd;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+
+    .error-button:hover {
+        background: #084298;
+        color: white;
+    }
 /* Ajuste sencillo para pantallas pequeñas. */
 @media (max-width: 640px) {
     .header-inner, .page-header, .ticket-card { align-items: flex-start; flex-direction: column; }
