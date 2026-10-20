@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\TicketCatalog;
+use App\Contract\InMemoryTicketCatalogInterface;
 use App\Service\TicketSlaCalculator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +17,7 @@ final class TicketController extends AbstractController
     en este caso llama al constructor de ese servicio creando la instancia automáticamente con toda las variables
     métodos, teniendo disponible la instancia en todos lados del controlador */
     public function __construct(
-        private readonly TicketCatalog $ticketCatalog,
+        private readonly InMemoryTicketCatalogInterface $ticketCatalog,
         private readonly TicketSlaCalculator $ticketSlaCalculator,
     ){}
 

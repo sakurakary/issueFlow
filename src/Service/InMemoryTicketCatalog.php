@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Contract\InMemoryTicketCatalogInterface;
 use App\Model\Ticket;
 use App\Model\TicketPriority;
 use App\Model\TicketStatus;
 
 
-final class TicketCatalog{
+final class inMemoryTicketCatalog implements InMemoryTicketCatalogInterface{
     private array $tickets;
 
     public function __construct(){
