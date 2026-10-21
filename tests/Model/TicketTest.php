@@ -61,7 +61,7 @@ final class TicketTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new Ticket(
-            id:'INC-001',
+            id:'INC-1001',
             title:'',
             priority: TicketPriority::Urgent,
             user:"CpVilla",
@@ -77,12 +77,12 @@ final class TicketTest extends TestCase
     {
 
         $ticket = new Ticket(
-            id:'INC-001',
+            id:'INC-1001',
             title:'Todo vamos pasando',
             priority: TicketPriority::Urgent,
             user:'Pepi',
             description:'Vamos avanzando con los tests ok',
-            date: new \DateTime('20/10/2026'),
+            date: new \DateTime('05/05/05'),
             status: TicketStatus::Open
         );
 
