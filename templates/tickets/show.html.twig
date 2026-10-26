@@ -1,18 +1,18 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ ticket.id }} - {{ ticket.title }}{% endblock %}
+{% block title %}{{ ticket.code }} - {{ ticket.title }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
         <div>
-            <p class="eyebrow">IFCT092PO - {{ ticket.id }} - {{ ticket.title }}</p>
+            <p class="eyebrow">IFCT092PO - {{ ticket.code }} - {{ ticket.title }}</p>
             <h1>{{ ticket.title }}</h1>
         </div>
     </div>
 
     <div class="ticket-details">
-        <p><strong>ID:</strong> {{ ticket.id }}</p>
+        <p><strong>ID:</strong> {{ ticket.code }}</p>
         <p><strong>Título:</strong> {{ ticket.title }}</p>
         <p><strong>Prioridad:</strong> {{ ticket.priority.label }}</p>
         <p><strong>Estado:</strong> {{ ticket.status.label }}</p>

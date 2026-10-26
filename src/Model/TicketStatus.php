@@ -10,14 +10,16 @@ namespace App\Model;
 enum TicketStatus: string{
 
     case Open = 'open';
+    case Escalated = 'escalated';
     case Close = 'close';
-    case Progress = 'in progress';
+    case InProgress = 'in progress';
 
     public function getLabel(): string{
         return match ($this) {
            self::Open => 'Abierto',
+           self::Escalated => 'Escalado',
            self::Close => 'Cerrado',
-           self::Progress => 'En Progreso',
+           self::InProgress => 'En Progreso',
         };
     }
     
@@ -28,8 +30,12 @@ enum TicketStatus: string{
     public function isClosed (): bool {
         return $this === self::Close;
     }
+    public function isEscalated (): bool {
+        return $this === self::Escalated;
+    }
+    public function isInProgress (): bool {
+        return $this === self::InProgress;
+    }
 }
 
     
-
-?>

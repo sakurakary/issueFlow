@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Model\TicketPriority;
-use App\Model\Ticket;
+use App\Entity\Ticket;
 
 
 //Crear un servicio que se encargue de asignar a los distintos tipos de priority de un ticket un tiempo de rrespuesta en horas de la siguiente manera: Urgent 4h, high 8h, normal 24h, low 72h

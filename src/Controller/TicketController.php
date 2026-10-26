@@ -33,20 +33,20 @@ final class TicketController extends AbstractController
     }
 
     // Ruta dinámica para mostrar un ticket específico por su ID.
-    #[Route('/tickets/{id}', name:"app_ticket_show", methods: ['GET'])]
+    #[Route('/tickets/{code}', name:"app_ticket_show", methods: ['GET'])]
     // El método que devuelve un ticket en particular por convención REST es show().
-    public function show(string $id/*, Request $request*/) {
+    public function show(string $code/*, Request $request*/) {
 
         
 
-        $ticket = $this->ticketCatalog->find($id);
+        $ticket = $this->ticketCatalog->findByCode($code);
         
         /*
             si entra en el if lanza (return) que hay un error y se termina la función
             si no entra la función sigue y seguiria haciendo lo que hubiese
         */
         if ($ticket === null) {
-            throw $this->createNotFoundException("Ticket con ID {$id} no encontrado.");
+            throw $this->createNotFoundException("Ticket {$code} no encontrado.");
         }
 
         /**/

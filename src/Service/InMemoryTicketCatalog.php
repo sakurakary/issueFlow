@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Contract\TicketCatalogInterface;
-use App\Model\Ticket;
+use App\Entity\Ticket;
 use App\Model\TicketPriority;
 use App\Model\TicketStatus;
 
 
-final class inMemoryTicketCatalog implements TicketCatalogInterface{
+final class InMemoryTicketCatalog implements TicketCatalogInterface{
     private array $tickets;
 
     public function __construct(){
-        $this->tickets = [
+       /* $this->tickets = [
             new Ticket(
-                id: 'INC-1001',
+                code: 'INC-1001',
                 title: 'Error en la factura',
                 priority: TicketPriority::Urgent,
                 description:'Al imprimir salta un error en la factura',
@@ -25,7 +25,7 @@ final class inMemoryTicketCatalog implements TicketCatalogInterface{
                 status: TicketStatus::Progress,
             ),
             new Ticket(
-                id: 'INC-1002',
+                code: 'INC-1002',
                 title: 'PC no enciednde',
                 priority: TicketPriority::High,
                 description:'Al imprimir salta un error en la factura',
@@ -34,7 +34,7 @@ final class inMemoryTicketCatalog implements TicketCatalogInterface{
                 status: TicketStatus::Close,
             ),
             new Ticket(
-                id: 'INC-1003',
+                code: 'INC-1003',
                 title: 'Error en la factura',
                 priority: TicketPriority::Normal,
                 description:'Al imprimir salta un error en la factura',
@@ -43,19 +43,19 @@ final class inMemoryTicketCatalog implements TicketCatalogInterface{
                 status: TicketStatus::Open,
             )
   
-        ];
+        ];*/
     }
 
     /* all() retorna el listado de los tickets */
     public function all(): array {
         return $this->tickets;
     }
-    /* find() retorna un ticket dado su $id o null
+    /* findByCode() retorna un ticket dado su $code o null
     si no existe */
-    public function find(string $id): ?Ticket {
-        return array_find(
+    public function findByCode(string $code): ?Ticket {
+        return array_findByCode(
             $this->tickets,
-            fn (Ticket $ticket): bool => $ticket->getId() === $id // Función flecha
+            fn (Ticket $ticket): bool => $ticket->getCode() === $code // Función flecha
         );
     }
 }

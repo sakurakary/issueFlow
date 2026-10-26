@@ -4,7 +4,7 @@ declare(strict_types= 1);
 
 namespace App\Tests\Service;
 
-use App\Model\Ticket;
+use App\Entity\Ticket;
 use App\Model\TicketPriority;
 use App\Model\TicketStatus;
 use App\Service\TicketSlaCalculator;
@@ -37,7 +37,7 @@ final class TicketSlaCalculatorTest extends TestCase
             Creo un ticket para la prueba del cálculo de horas según la prioridad
         */
         $ticket = new Ticket(
-            id:'INC-2001',
+            code:'INC-2001',
             title: 'Incidencia de prueba',
             priority: $priority,
             user:'pepe21',

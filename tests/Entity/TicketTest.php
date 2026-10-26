@@ -6,7 +6,7 @@ namespace App\Tests\Model;
 
 use App\Model\TicketPriority;
 use App\Model\TicketStatus;
-use App\Model\Ticket;
+use App\Entity\Ticket;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use InvalidArgumentException;
@@ -28,12 +28,12 @@ final class TicketTest extends TestCase
     public function it_normalizes_a_title_when_the_ticket_is_created(): void
     {
         $ticket = new Ticket(
-            id: "INC-1004",
+            code: "INC-1004",
             title:"     No puede iniciar sesión     ",
             priority: TicketPriority::Urgent,
             user:"CpVilla",
             description:"Al iniciar la sesión se queda congelado en el escritorio",
-            date: new \DateTime('05/05/05'),
+            date: new DateTime(),
             status: TicketStatus::Open,
         );
         /*
@@ -61,7 +61,7 @@ final class TicketTest extends TestCase
             priority: TicketPriority::Urgent,
             user:"CpVilla",
             description:"Al iniciar la sesión se queda congelado en el escritorio",
-            date: new \DateTime('05/05/05'),
+            date: new DateTime(),
             status: TicketStatus::Open,
         );
 
@@ -69,26 +69,26 @@ final class TicketTest extends TestCase
     public static function idProvider(): iterable
     {
         /* yield emite cada uno de los casos. es recomendable llamarlo como lo que va a devolver*/
-        yield 'Invalid ID: non_inc_prefix Ticket0001' => ['Ticket0001'];
-        yield 'Invalid ID: too_few_digits INC-101' => ['INC-101'];
-        yield 'Invalid ID: too_many_digits INC-12345' => ['INC-12345'];
-        yield 'Invalid ID: wrong_separator INC_1001' => ['INC_1001'];
-        yield 'Invalid ID: lower_case_prefix inc-2345' => ['inc-2345'];
-        yield 'Invalid ID: empty_string'=> [''];
+        yield 'Invalid: non_inc_prefix Ticket0001' => ['Ticket0001'];
+        yield 'Invalid: too_few_digits INC-101' => ['INC-101'];
+        yield 'Invalid: too_many_digits INC-12345' => ['INC-12345'];
+        yield 'Invalid: wrong_separator INC_1001' => ['INC_1001'];
+        yield 'Invalid: lower_case_prefix inc-2345' => ['inc-2345'];
+        yield 'Invalid: empty_string'=> [''];
     }
 
     #[Test]
-    #[DataProvider('idProvider')]
-     public function it_rejects_an_invalid_identifier(string $id): void 
+    #[DataProvider('codeProvider')]
+     public function it_rejects_an_invalid_identifier(string $code): void 
     {
         $this->expectException(InvalidArgumentException::class);
         new Ticket(
-            id: $id,
+            code: $code,
             title: 'Incidencia de prueba',
             priority: TicketPriority::Urgent,
             user:'pepe21',
             description:'Es una ticket para hacer un test de TicketSlaCalculator',
-            date: new DateTime('05/05/05'),
+            date: new DateTime(),
             status: TicketStatus::Open,
         );
     }
@@ -98,12 +98,12 @@ final class TicketTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new Ticket(
-            id:'INC-1001',
+            code:'INC-1001',
             title:'',
             priority: TicketPriority::Urgent,
             user:"CpVilla",
             description:"Al iniciar la sesión se queda congelado en el escritorio",
-            date: new \DateTime('05/05/05'),
+            date: new DateTime(),
             status: TicketStatus::Open,
         );
 
@@ -114,12 +114,12 @@ final class TicketTest extends TestCase
     {
 
         $ticket = new Ticket(
-            id:'INC-1001',
+            code:'INC-1001',
             title:'Todo vamos pasando',
             priority: TicketPriority::Urgent,
             user:'Pepi',
             description:'Vamos avanzando con los tests ok',
-            date: new \DateTime('05/05/05'),
+            date: new DateTime(),
             status: TicketStatus::Open
         );
 

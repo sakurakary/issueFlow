@@ -4,13 +4,11 @@ declare(strict_types= 1);
 
 namespace App\Contract;
 
-use App\Model\Ticket;
+use App\Entity\Ticket;
 
 interface TicketCatalogInterface
 {
 
     public function all() : array;
-    public function find(string $id): ?Ticket;
-
-
+    public function findByCode(string $code): ?Ticket;
 }
