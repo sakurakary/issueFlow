@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Contract\TicketCatalogInterface;
 use App\Entity\Ticket;
 
-use Doctrine\bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 

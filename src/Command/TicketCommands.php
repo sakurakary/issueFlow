@@ -32,9 +32,9 @@ final class TicketCommands
 
     public function seed(OutputInterface $output): int{
         $tickets = [
-            ['INC-1001', 'No puedo iniciar sesión', TicketPriority::Urgent, TicketStatus::Open, 'Se queda el ordenador bloqueado en la pantalla de inicio', 'carlos47'],
-            ['INC-1002', 'Error en la factura', TicketPriority::High, TicketStatus::InProgress,  'La factura no tiene el IVA desglosado', 'noelia43'],
-            ['INC-1003', 'Actualizar datos de contacto', TicketPriority::Normal, TicketStatus::Close,  'Cliente llama para actualizar susdatos ', 'pedro61'],
+            ['INC-1001', 'No puedo iniciar sesión', TicketPriority::Urgent, TicketStatus::Open, 'Se queda el ordenador bloqueado en la pantalla de inicio', 'carlos47',''],
+            ['INC-1002', 'Error en la factura', TicketPriority::High, TicketStatus::InProgress,  'La factura no tiene el IVA desglosado', 'noelia43',''],
+            ['INC-1003', 'Actualizar datos de contacto', TicketPriority::Normal, TicketStatus::Close,  'Cliente llama para actualizar susdatos ', 'pedro61',''],
         ];
 
         $createTickets = [];
@@ -42,7 +42,8 @@ final class TicketCommands
         //Escribir $ticket de manera desestructurada
         foreach ($tickets as [$code,$title,$priority,$status,$description,$user,$date]) {
             //el comando es idempotente, verifica que el ticket existe, no crea duplicados 
-            if($this->ticketRepository->findByCode($ticket[0])) {
+            if($this->ticketRepository->findByCode($code) !== null)
+            {
                 /**
                  * El método writeln de output escribe en el terminal, sprintf() me sirve para crear cadenas formateadas:
                  *     Cada símbolo % + letra, se sustituye por los argumentos a partir del segundo según el orden que aparezcan
@@ -76,9 +77,7 @@ final class TicketCommands
          * Muestro en pantalla los agregados:
          */
         foreach ($createTickets as $ticket) {
-            $output->writeln(sprintf('Incidencia %s persistida con id %d',
-            $ticket->getCode().
-            $ticket->getId()));
+            $output->writeln(sprintf('Incidencia %s persistida con id %d', $ticket->getCode(), $ticket->getId()));
         }
 
         return Command::SUCCESS;
