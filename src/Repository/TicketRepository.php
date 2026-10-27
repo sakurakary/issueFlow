@@ -9,8 +9,10 @@ use App\Entity\Ticket;
 
 use Doctrine\bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Override;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
+//salvo que en la configuración esté puesta alguna otra interfaz por concreto, usando AsAlias definimos la implementación por defecto
+#[AsAlias(TicketCatalogInterface::class)]
 /*
     Reopository Doctrine de Ticket implementa TicketCatalogInterface
 */
@@ -27,7 +29,7 @@ final class TicketRepository extends ServiceEntityRepository implements TicketCa
     }
 
     //Método que devuelve incidencias por su código, si no la encuentra devuelve null
-    #[Override]
+
     public function findByCode(string $code): ?Ticket
     {
         return $this->findOneBy(['code'=>$code]);

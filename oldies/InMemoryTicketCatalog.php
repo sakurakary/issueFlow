@@ -10,6 +10,7 @@ use App\Model\TicketPriority;
 use App\Model\TicketStatus;
 
 
+
 final class InMemoryTicketCatalog implements TicketCatalogInterface{
     private array $tickets;
 
@@ -53,7 +54,7 @@ final class InMemoryTicketCatalog implements TicketCatalogInterface{
     /* findByCode() retorna un ticket dado su $code o null
     si no existe */
     public function findByCode(string $code): ?Ticket {
-        return array_findByCode(
+        return array_find(
             $this->tickets,
             fn (Ticket $ticket): bool => $ticket->getCode() === $code // Función flecha
         );

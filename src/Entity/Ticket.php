@@ -22,6 +22,7 @@ use App\Model\TicketPriority;
 use App\Model\TicketStatus;
 use DateTime;
 use InvalidArgumentException;
+use App\Repository\TicketRepository;
 
 /*No es necesario el use por estar en el mismo namespace
         use app\Model\TicketPriority;
@@ -30,7 +31,7 @@ use InvalidArgumentException;
 #Comentario: Entity Doctrine de una incidencia de IssueFlow
 #Sigue siendo un objeto PHP con reglas de dominio. Los atributos #[ORM\\...] añaden el mapping necesario para que Doctrine sepa como persistirlo.
 #con esto le decimos que corresponde a cada cosa
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: TicketRepository::class)]
 #[ORM\Table(name: 'tickets')]
 
 final class Ticket {
